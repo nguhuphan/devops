@@ -1,0 +1,24 @@
+- hosts: local
+  gather_facts: True
+  remote_user: ubuntu
+  become: yes
+  vars_files:
+      - ../../group_vars/all/main.yml
+  
+  tasks:
+    - name: installing repo for Java 8 in Ubuntu
+      apt_repository: repo='ppa:openjdk-r/ppa'
+
+  pre_tasks:
+    - debug:
+        msg: "Start playing in target server"
+
+  roles:
+    - role: geerlingguy.java
+      when: "ansible_os_family == 'Debian'"
+      java_packages:
+      tags: java
+    
+    - role: geerlingguy.java
+      when: "ansible_os_family == 'RedHat'"
+      java_packages:

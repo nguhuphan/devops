@@ -1,0 +1,1 @@
+To install required roles: ` ansible-galaxy install -r requirements.yml ` 
