@@ -1,0 +1,14 @@
+- hosts: local
+  gather_facts: True
+  remote_user: ubuntu
+  become: yes
+  vars_files:
+      - ../../group_vars/all/main.yml
+  
+  pre_tasks:
+    - debug:
+        msg: "Start playing in target server"
+
+  roles:
+    - role: geerlingguy.nodejs
+      tags: nodejs

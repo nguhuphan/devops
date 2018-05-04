@@ -1,5 +1,7 @@
 # http://www.gnu.org/software/automake
 
+/roles-galaxy/*
+
 Makefile.in
 /ar-lib
 /mdate-sh

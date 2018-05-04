@@ -1,24 +1,12 @@
 - hosts: local
-  gather_facts: True
-  remote_user: ubuntu
+  user: vagrant
   become: yes
-  vars_files:
-      - ../../group_vars/all/main.yml
-  
   tasks:
     - name: installing repo for Java 8 in Ubuntu
       apt_repository: repo='ppa:openjdk-r/ppa'
-
-  pre_tasks:
-    - debug:
-        msg: "Start playing in target server"
-
   roles:
     - role: geerlingguy.java
       when: "ansible_os_family == 'Debian'"
       java_packages:
+        - openjdk-8-jdk
       tags: java
-    
-    - role: geerlingguy.java
-      when: "ansible_os_family == 'RedHat'"
-      java_packages:
