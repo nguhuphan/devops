@@ -1,3 +1,6 @@
 # Install a role from the Ansible Galaxy
 - src: geerlingguy.java
 #  src: git+https://github.com/geerlingguy/ansible-role-java
+- src: geerlingguy.pip
+- src: angrox.azure-cli
+- src: brentwg.azure-cli

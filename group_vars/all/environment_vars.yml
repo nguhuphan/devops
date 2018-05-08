@@ -1,0 +1,5 @@
+environment_vars:
+  AZURE_SUBSCRIPTION_ID: "{{ az_subscription_id }}"
+  AZURE_CLIENT_ID: "{{ az_client_id }}"
+  AZURE_SECRET: "{{ az_secret }}"
+  AZURE_TENANT: "{{ az_tenant }}"

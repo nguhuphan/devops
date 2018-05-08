@@ -1,0 +1,14 @@
+- name: Configuring environment
+  lineinfile:
+    dest: /home/vagrant/.profile
+    regexp: "^export {{ item.key }}"
+    line: "export {{ item.key }}='{{ item.value }}'"
+  with_dict: "{{ environment_config }}"
+  tags: configure_azure_environments
+
+- name: Using environment variables
+  shell: source .profile
+  args:
+    chdir: /home/vagrant/
+    executable: /bin/bash
+  tags: configure_azure_environments

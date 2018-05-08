@@ -2,4 +2,5 @@
 localhost ansible_connection=local ansible_python_interpreter=python
 
 [webservers]
-tag_Name_test_webserver
+Name_ap-nginx-vm1
+

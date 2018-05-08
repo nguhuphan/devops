@@ -1,1 +1,3 @@
-- include: ./java/main.yml
+- include: ./tools/java.yml
+- include: ./web/main.yml
+- include: ./tools/main.yml

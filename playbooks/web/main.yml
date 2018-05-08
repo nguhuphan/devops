@@ -1,0 +1,12 @@
+- hosts: local
+  user: vagrant
+  become: no
+  vars_files: 
+    - ../../group_vars/all/environment_vars.yml
+
+  vars:
+    environment_config: "{{ environment_vars }}"
+
+  roles:
+    - role: app.update_env
+      tags: configure_azure_environments
