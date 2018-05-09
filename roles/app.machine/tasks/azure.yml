@@ -1,0 +1,51 @@
+- name: Create virtual network
+  azure_rm_virtualnetwork:
+    resource_group: "{{ az_resource_group }}"
+    name: "{{ az_virtualnetwork_name }}"
+    address_prefixes: "{{ az_address_prefixes }}"
+
+- name: Add subnet
+  azure_rm_subnet:
+    resource_group: "{{ az_resource_group }}"
+    name: "{{ az_subnet_name }}"
+    address_prefix: "{{ az_address_subnet }}"
+    virtual_network: "{{ az_virtualnetwork_name }}"
+
+- name: Create public IP address
+  azure_rm_publicipaddress:
+    resource_group: "{{ az_resource_group }}"
+    allocation_method: Static
+    name: "{{ az_publicipaddress_name }}"
+
+- name: Create Network Security Group that allows SSH
+  azure_rm_securitygroup: "{{ az_securitygroup }}"
+
+- name: Create virtual network inteface card
+  azure_rm_networkinterface:
+    resource_group: "{{ az_resource_group }}"
+    name: "{{ az_nic_name }}"
+    virtual_network: "{{ az_virtualnetwork_name }}"
+    subnet: "{{ az_subnet_name }}"
+    public_ip_name: "{{ az_publicipaddress_name }}"
+    security_group: "{{ az_security_group }}"
+
+- name: Create VM
+  azure_rm_virtualmachine:
+    resource_group: "{{ az_resource_group }}"
+    name: "{{ az_vm_name }}"
+    vm_size: "{{ az_vm_size }}"
+    admin_username: "{{ ansible_ssh_user }}"
+    ssh_password_enabled: false
+    ssh_public_keys: 
+      - path: /home/{{ ansible_ssh_user }}/.ssh/authorized_keys
+        key_data: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+Ys+yWN+lzyq0dxqbir4KJFDBfIcTKy2fTeIF1cpkwCcMciamHHgQ19MMxHo06OjxcQ7VfnDbMClrNjUiOpFbIbPlsgTnRLEEitRymn55G/Z/INXCvksXQHp1KrhQIh+sUD54ZLyVAPK1mOyuR8ihXp3i2Z2gvkLNskIOmB85fSHsKtcFDpoU+j2T1DvA1i1YN8ULyeD35mn6eQ7IYe6ByBU38WRgJMDEZk4crPkq3dvQ5sCTrVSsAc6XsTdXwoCYw4Ji2+fSvdjMOhwhnzCnmZ4hxGt2epNjnvbq+LyVcPsRPHZ4VhM+lW2UUrguvHmGNkOy/rZHNvLq0eeu+mnb vagrant@ubuntu-xenial"
+    network_interfaces: "{{ az_nic_name }}"
+    image:
+      offer: "{{ offer }}"
+      publisher: "{{ publisher }}"
+      sku: "{{ sku }}"
+      version: "{{ version }}"
+    tags: 
+      "{{ item.keyv }}" : "{{ item.valuev }}"
+  with_items: "{{ az_machine_tag }}"
+      

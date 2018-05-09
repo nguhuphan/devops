@@ -1,6 +1,4 @@
 [local]
 localhost ansible_connection=local ansible_python_interpreter=python
 
-[webservers]
-Name_ap-nginx-vm1
 

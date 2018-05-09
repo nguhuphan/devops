@@ -15,9 +15,9 @@ Put your password into ~/.vault_pass
 
 To install required roles: ``` ansible-galaxy install -p roles-galaxy -r requirements.yml --force``` 
 
-To install java: ``` ansible-playbook -i inventory/test playbooks/playbooks.yml -e ansible_os_family=RedHat --tags java``` with ansible_os_family=RedHat,FreeBSD, Debian
+To update Azure environment variable: ``` ansible-playbook -i inventory/test playbooks/playbooks.yml --tags configure_azure_environments ```
 
-To update environment variable: ``` ansible-playbook -i inventory/test playbooks/playbooks.yml --tags configure_azure_environments ```
+To install java: ``` ansible-playbook -i inventory/test playbooks/playbooks.yml -e ansible_os_family=Debian --tags java_debian``` with ansible_os_family=RedHat,FreeBSD, Debian
 
 To install pip, run the following command: ``` ansible-playbook -i inventory/test playbooks/playbooks.yml --tags pip ```
 

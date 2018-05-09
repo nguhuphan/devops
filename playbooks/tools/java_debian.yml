@@ -1,0 +1,10 @@
+- hosts: Name_ap-nginx-vm
+  gather_facts: True
+  remote_user: azureuser
+  become: yes
+  vars_files:
+      - ../../group_vars/all/main.yml
+  
+  roles:
+    - role: tschifftner.java
+      tags: java_debian

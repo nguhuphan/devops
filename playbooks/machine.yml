@@ -1,0 +1,6 @@
+- name: Create Cloud VM
+  hosts: localhost
+  connection: local
+
+  roles:
+    - role: app.machine

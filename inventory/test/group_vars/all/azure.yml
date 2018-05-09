@@ -1,0 +1,46 @@
+# There are arguments should be updated before provisioning a new machine
+az_resource_group: AzurePassGRP
+
+az_address_prefixes: "172.31.0.0/16"
+
+az_address_subnet: 172.31.1.0/24
+
+az_machine_tag: 
+  - { keyv: Name , valuev: ap-nginx-vm }
+
+az_virtualnetwork_name: TestNW
+
+az_publicipaddress_name: TestPublicIP
+
+az_nic_name: TestNIC
+
+az_subnet_name: TestSN
+
+az_security_group: TestNetworkSecurityGroup
+
+az_vm_name: TestVM
+
+az_vm_size: Standard_DS1_v2
+
+az_securitygroup:
+  resource_group: "{{ az_resource_group }}"
+  name: "{{ az_security_group }}"
+  rules:
+    - name: SSH
+      protocol: Tcp
+      destination_port_range: 22
+      access: Allow
+      priority: 1001
+      direction: Inbound
+    - name: HTTP
+      protocol: Tcp
+      destination_port_range: 80
+      access: Allow
+      priority: 1002
+      direction: Inbound
+
+# a image config
+offer: UbuntuServer
+publisher: Canonical
+sku: "17.10"
+version: "17.10.201804230"

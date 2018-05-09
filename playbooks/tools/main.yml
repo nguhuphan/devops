@@ -1,7 +1,7 @@
-- hosts: local
+- hosts: Name_ap-nginx-vm
   gather_facts: True
-  remote_user: vagrant
-  become: no
+  remote_user: azureuser
+  become: yes
   vars_files:
       - ../../group_vars/all/main.yml
   
@@ -11,7 +11,6 @@
 
   roles:
     - role: brentwg.azure-cli
-      become: yes
       tags: azure-cli
     - role: geerlingguy.pip
       tags: pip
