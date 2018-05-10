@@ -46,6 +46,6 @@
       sku: "{{ sku }}"
       version: "{{ version }}"
     tags: 
-      "{{ item.keyv }}" : "{{ item.valuev }}"
+      'Name' : '{{ item.tagvalue }}'
   with_items: "{{ az_machine_tag }}"
-      
+    

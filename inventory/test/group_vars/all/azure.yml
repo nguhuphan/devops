@@ -6,7 +6,7 @@ az_address_prefixes: "172.31.0.0/16"
 az_address_subnet: 172.31.1.0/24
 
 az_machine_tag: 
-  - { keyv: Name , valuev: ap-nginx-vm }
+  - { tagname: 'Name' , tagvalue: 'ap-nginx-vm' }
 
 az_virtualnetwork_name: TestNW
 
@@ -44,3 +44,6 @@ offer: UbuntuServer
 publisher: Canonical
 sku: "17.10"
 version: "17.10.201804230"
+
+# There will be used for Kubernetes
+az_aks_cluster: MyAKSCluster
