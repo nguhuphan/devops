@@ -1,5 +1,5 @@
 - hosts: Name_ap-nginx-vm
-  gather_facts: True
+  gather_facts: false
   remote_user: azureuser
   become: yes
   vars_files:

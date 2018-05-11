@@ -10,7 +10,7 @@
     group: "{{ ansible_ssh_user }}"
 #    mode: '0600'
 - name: Execute AKS deployment script
-  shell: kubectl create -f azure-deployment-aks.yml
+  shell: kubectl apply -f azure-deployment-aks.yml
   args:
     chdir: /home/{{ ansible_ssh_user }}
     executable: /bin/bash

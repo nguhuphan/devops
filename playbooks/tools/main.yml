@@ -1,6 +1,6 @@
-- hosts: Name_ap-nginx-vm
-  gather_facts: True
-  remote_user: azureuser
+- hosts: local
+  gather_facts: false
+  remote_user: vagrant
   become: yes
   vars_files:
       - ../../group_vars/all/main.yml
@@ -14,3 +14,5 @@
       tags: azure-cli
     - role: geerlingguy.pip
       tags: pip
+    - role: githubixx.kubectl
+      tags: kubectl

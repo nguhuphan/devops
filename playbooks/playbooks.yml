@@ -1,3 +1,4 @@
 - include: ./tools/java_debian.yml
 - include: ./web/main.yml
 - include: ./tools/main.yml
+- include: ./kubernetes/azure.yml

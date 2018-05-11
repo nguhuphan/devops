@@ -1,0 +1,8 @@
+- hosts: local
+  user: vagrant
+  become: no
+  gather_facts: false
+
+  roles:
+    - role: app.kubernetes
+      tags: azure_kubernetes
