@@ -22,3 +22,5 @@ To install java: ``` ansible-playbook -i inventory/test playbooks/playbooks.yml 
 To install pip, run the following command: ``` ansible-playbook -i inventory/test playbooks/playbooks.yml --tags pip ```
 
 To install azure-cli, run the following command: ``` ansible-playbook -i inventory/test playbooks/playbooks.yml --tags azure-cli ```
+
+To install list of packages: ``` ansible-playbook -i inventory/test -e ansible_os_family=ubuntu --tags install_packages playbooks/playbooks.yml  ```

@@ -5,4 +5,4 @@
 
   roles:
     - role: app.kubernetes
-      tags: azure_kubernetes
+      tags: azure_nginx

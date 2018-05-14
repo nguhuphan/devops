@@ -1,16 +1,46 @@
+- name: Create an account
+  azure_rm_storageaccount:
+    resource_group: "{{ az_resource_group }}"
+    name: "{{ az_storage_acc_name }}"
+    type: "{{ az_storage_acc_type }}"
+  ignore_errors: yes
+
+- name: copy the script to target server
+  template:
+    src: scripts.sh.j2
+    dest: /home/{{ ansible_ssh_user }}/scripts.sh
+    owner: "{{ ansible_ssh_user }}"
+    group: "{{ ansible_ssh_user }}"
+    mode: 0644
+
+- name: Copy file to target server
+  copy:
+    src: index.html
+    dest: ~/index.html
+    owner: "{{ ansible_ssh_user }}"
+    group: "{{ ansible_ssh_user }}"
+    mode: 0644
+
+- name: Execute the script
+  command: sh /home/{{ ansible_ssh_user }}/scripts.sh
+
+- name: Create AKS cluster
+  shell: az aks create --resource-group {{ az_resource_group }} --name {{ az_aks_cluster_name }} --node-count {{ node_count }}
+
 - name: Login to the AKS service
   shell: az aks get-credentials --resource-group {{ az_resource_group }} --name {{ az_aks_cluster }}
   args:
     chdir: /home/{{ ansible_ssh_user }}
     executable: /bin/bash
+
 - template:
-    src: azure-deployment-aks.yml.j2
-    dest: /home/{{ ansible_ssh_user }}/azure-deployment-aks.yml
+    src: k8s_nginx_deployment.yml.j2
+    dest: /home/{{ ansible_ssh_user }}/k8s_nginx_deployment.yml
     owner: "{{ ansible_ssh_user }}"
     group: "{{ ansible_ssh_user }}"
-#    mode: '0600'
+
 - name: Execute AKS deployment script
-  shell: kubectl apply -f azure-deployment-aks.yml
+  shell: kubectl {{ flag }} -f k8s_nginx_deployment.yml
   args:
     chdir: /home/{{ ansible_ssh_user }}
     executable: /bin/bash

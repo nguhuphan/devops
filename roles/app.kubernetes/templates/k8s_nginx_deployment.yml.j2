@@ -1,0 +1,36 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.7.9
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: azure
+          mountPath: mnt/fileshare
+      volumes:
+        - name: azure
+          azureFile:
+            secretName: {{ k8s_storage_key }}
+            shareName: {{ az_storage_acc_name }}
+            readOnly: false
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  ports:
+  - port: 80
+  selector:
+    app: nginx
+

@@ -1,6 +1,6 @@
-- hosts: local
+- hosts: Name_ap-nginx-vm
   gather_facts: false
-  remote_user: vagrant
+  remote_user: "{{ ansible_ssh_user }}"
   become: yes
   vars_files:
       - ../../group_vars/all/main.yml
@@ -16,3 +16,5 @@
       tags: pip
     - role: githubixx.kubectl
       tags: kubectl
+    - role: app.machine
+      tags: install_packages

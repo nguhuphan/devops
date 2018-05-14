@@ -1,1 +1,3 @@
-- include: azure.yml
+#- include: azure.yml
+- include: ubuntu.yml
+  when: ansible_os_family == 'ubuntu'
