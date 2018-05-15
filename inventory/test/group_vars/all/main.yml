@@ -40,9 +40,3 @@ java_packages: openjdk-8-jdk
 
 install_packages:
   - cifs-utils
-
-az_storage_acc_name: nginxtest
-az_storage_acc_type: Standard_RAGRS
-k8s_storage_key: storage_key
-az_aks_cluster_name: nginxtest
-node_count: 3

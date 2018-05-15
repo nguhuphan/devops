@@ -1,7 +1,9 @@
+#!/bin/bash
+set -e
 # get string connection
 current_env_conn_string=$(az storage account show-connection-string -n {{ az_storage_acc_name }} -g {{ az_resource_group }} --query 'connectionString' -o tsv)
 
-if [[ $current_env_conn_string == "" ]]; then  
+if [ $current_env_conn_string == "" ]; then  
     echo "Couldn't retrieve the connection string."
 fi
 # Create share file name 
@@ -12,3 +14,12 @@ az storage share create --name {{ az_storage_acc_name }} --quota 2048 --connecti
 
 # Upload file to new folder on Azure storage file 
 az storage file upload --account-name {{ az_storage_acc_name }} --account-key ${{ k8s_storage_key }} --share-name {{ az_storage_acc_name }} --source ~/index.html --path "index.html"
+
+# Create AKS cluster
+az aks create --resource-group {{ az_resource_group }} --name {{ az_aks_cluster_name }} --node-count {{ k8s_node_count }} --node-vm-size {{ k8s_node_size }} --location eastus
+
+# Login to the AKS service
+az aks get-credentials --resource-group {{ az_resource_group }} --name {{ az_aks_cluster_name }}
+
+# Create a secret key to access storage file
+kubectl create secret generic {{ k8s_azure_secret_key }} --from-literal=azurestorageaccountname={{ az_storage_acc_name }} --from-literal=azurestorageaccountkey=${{ k8s_storage_key }} | true

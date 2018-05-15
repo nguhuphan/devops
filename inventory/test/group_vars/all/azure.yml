@@ -1,6 +1,8 @@
 # There are arguments should be updated before provisioning a new machine
 az_resource_group: AzurePassGRP
 
+az_location: southeastasia
+
 az_address_prefixes: "172.31.0.0/16"
 
 az_address_subnet: 172.31.1.0/24
@@ -46,4 +48,10 @@ sku: "17.10"
 version: "17.10.201804230"
 
 # There will be used for Kubernetes
-az_aks_cluster: MyAKSCluster
+az_storage_acc_name: nginxtest
+az_storage_acc_type: Standard_RAGRS
+k8s_storage_key: storage_key
+az_aks_cluster_name: nginxtest
+k8s_node_count: 1
+k8s_node_size: Standard_D1
+k8s_azure_secret_key: azure-secret

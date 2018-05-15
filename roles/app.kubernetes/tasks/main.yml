@@ -1,3 +1,8 @@
+- name: Create a resource group
+  azure_rm_resourcegroup:
+    name: "{{ az_resource_group }}"
+    location: "{{ az_location }}"
+    state: present
 - name: Create an account
   azure_rm_storageaccount:
     resource_group: "{{ az_resource_group }}"
@@ -24,16 +29,8 @@
 - name: Execute the script
   command: sh /home/{{ ansible_ssh_user }}/scripts.sh
 
-- name: Create AKS cluster
-  shell: az aks create --resource-group {{ az_resource_group }} --name {{ az_aks_cluster_name }} --node-count {{ node_count }}
-
-- name: Login to the AKS service
-  shell: az aks get-credentials --resource-group {{ az_resource_group }} --name {{ az_aks_cluster }}
-  args:
-    chdir: /home/{{ ansible_ssh_user }}
-    executable: /bin/bash
-
-- template:
+- name: Copy template file to target server
+  template:
     src: k8s_nginx_deployment.yml.j2
     dest: /home/{{ ansible_ssh_user }}/k8s_nginx_deployment.yml
     owner: "{{ ansible_ssh_user }}"
