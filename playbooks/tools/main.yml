@@ -1,4 +1,4 @@
-- hosts: Name_ap-nginx-vm
+- hosts: local
   gather_facts: false
   remote_user: "{{ ansible_ssh_user }}"
   become: yes
@@ -18,3 +18,5 @@
       tags: kubectl
     - role: app.machine
       tags: install_packages
+    - role: geerlingguy.docker
+      tags: docker

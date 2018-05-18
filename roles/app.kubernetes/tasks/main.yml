@@ -10,14 +10,15 @@
     type: "{{ az_storage_acc_type }}"
   ignore_errors: yes
 
+# Copy scripts which create share folder on Azure and upload a file into this
 - name: copy the script to target server
   template:
     src: scripts.sh.j2
     dest: /home/{{ ansible_ssh_user }}/scripts.sh
-    owner: "{{ ansible_ssh_user }}"
-    group: "{{ ansible_ssh_user }}"
-    mode: 0644
+#    owner: "{{ ansible_ssh_user }}"
+#    group: "{{ ansible_ssh_user }}"
 
+# Copy index.html file to server
 - name: Copy file to target server
   copy:
     src: index.html
@@ -26,9 +27,11 @@
     group: "{{ ansible_ssh_user }}"
     mode: 0644
 
+# Execute this script which will create share folder on Azure and upload index.html to this
 - name: Execute the script
   command: sh /home/{{ ansible_ssh_user }}/scripts.sh
 
+# Create kubernetes deployment file
 - name: Copy template file to target server
   template:
     src: k8s_nginx_deployment.yml.j2
@@ -36,8 +39,14 @@
     owner: "{{ ansible_ssh_user }}"
     group: "{{ ansible_ssh_user }}"
 
+# flag=create or apply
 - name: Execute AKS deployment script
   shell: kubectl {{ flag }} -f k8s_nginx_deployment.yml
   args:
     chdir: /home/{{ ansible_ssh_user }}
     executable: /bin/bash
+
+- name: Show LoadBalancer IP address
+  shell: kubectl describe services {{ az_nginx_service_name }} | grep 'LoadBalancer Ingress'
+  register: loadbalancerip
+- debug: var=loadbalancerip.stdout_lines

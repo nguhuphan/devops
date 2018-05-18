@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+
 # get string connection
 current_env_conn_string=$(az storage account show-connection-string -n {{ az_storage_acc_name }} -g {{ az_resource_group }} --query 'connectionString' -o tsv)
 
@@ -22,4 +23,4 @@ az aks create --resource-group {{ az_resource_group }} --name {{ az_aks_cluster_
 az aks get-credentials --resource-group {{ az_resource_group }} --name {{ az_aks_cluster_name }}
 
 # Create a secret key to access storage file
-kubectl create secret generic {{ k8s_azure_secret_key }} --from-literal=azurestorageaccountname={{ az_storage_acc_name }} --from-literal=azurestorageaccountkey=${{ k8s_storage_key }} | true
+# kubectl create secret generic {{ k8s_azure_secret_key }} --from-literal=azurestorageaccountname={{ az_storage_acc_name }} --from-literal=azurestorageaccountkey=${{ k8s_storage_key }} | true
