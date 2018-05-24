@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: static-pv-secret
+type: Opaque
+data:
+  azurestorageaccountname: dGVzdG1vdW50YXpmaWxl
+  azurestorageaccountkey: ckZONzl3bmFRSnQxQ3ZuSFhIYS9Wb0pGdWxRc0dFSTByUE4wdUFxa29hUVVtaGl5dlRRd0lPeGRWcDBYb3JuTCs1RS9XMlJrSnVlMEtRNVBtaGdId0E9PQ==
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: azurefilestorage
+provisioner: kubernetes.io/azure-file
+parameters:
+  storageAccount: testmountazfile
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: static-pv
+  labels:
+    volume: pv
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+  - ReadWriteMany
+  storageClassName: azurefilestorage
+  azureFile:
+    secretName: static-pv-secret
+    shareName: testmount
+    readOnly: false
+  claimRef:
+    name: static-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: static-pvc
+spec:
+  accessModes:
+    - ReadWriteMany  
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: azurefilestorage # from where ?
+  #volumeName: "static-pv"
+  selector: 
+    matchLabels:
+      volume: pv

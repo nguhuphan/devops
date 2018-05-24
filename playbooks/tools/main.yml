@@ -14,7 +14,7 @@
       tags: azure-cli
     - role: geerlingguy.pip
       tags: pip
-    - role: githubixx.kubectl
+    - role: andrewrothstein.kubectl
       tags: kubectl
     - role: app.machine
       tags: install_packages

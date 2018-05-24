@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-deployment
+  labels:
+    app: test-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test
+  template:
+    metadata:
+      labels:
+        app: test
+    spec:
+      containers:
+      - name: test
+        image: microsoft/aci-helloworld
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: fileshare
+          mountPath: /tmp
+      volumes:
+        - name: fileshare
+          persistentVolumeClaim:
+            claimName: static-pvc
+

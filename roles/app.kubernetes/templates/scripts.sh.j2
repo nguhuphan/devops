@@ -2,19 +2,19 @@
 set -e
 
 # get string connection
-current_env_conn_string=$(az storage account show-connection-string -n {{ az_storage_acc_name }} -g {{ az_resource_group }} --query 'connectionString' -o tsv)
+#current_env_conn_string=$(az storage account show-connection-string -n {{ az_storage_acc_name }} -g {{ az_resource_group }} --query 'connectionString' -o tsv)
 
-if [ $current_env_conn_string == "" ]; then  
-    echo "Couldn't retrieve the connection string."
-fi
+#if [ $current_env_conn_string == "" ]; then  
+#    echo "Couldn't retrieve the connection string."
+#fi
 # Create share file name 
-az storage share create --name {{ az_storage_acc_name }} --quota 2048 --connection-string $current_env_conn_string > /dev/null
+#az storage share create --name {{ az_storage_acc_name }} --quota 2048 --connection-string $current_env_conn_string > /dev/null
 
 # get storage key 
-{{ k8s_storage_key }}=$(az storage account keys list --resource-group {{ az_resource_group }} --account-name {{ az_storage_acc_name }} --query "[0].value" | tr -d '"')
+#{{ k8s_storage_key }}=$(az storage account keys list --resource-group {{ az_resource_group }} --account-name {{ az_storage_acc_name }} --query "[0].value" | tr -d '"')
 
 # Upload file to new folder on Azure storage file 
-az storage file upload --account-name {{ az_storage_acc_name }} --account-key ${{ k8s_storage_key }} --share-name {{ az_storage_acc_name }} --source ~/index.html --path "index.html"
+#az storage file upload --account-name {{ az_storage_acc_name }} --account-key ${{ k8s_storage_key }} --share-name {{ az_storage_acc_name }} --source ~/index.html --path "index.html"
 
 # Create AKS cluster
 az aks create --resource-group {{ az_resource_group }} --name {{ az_aks_cluster_name }} --node-count {{ k8s_node_count }} --node-vm-size {{ k8s_node_size }} --location eastus

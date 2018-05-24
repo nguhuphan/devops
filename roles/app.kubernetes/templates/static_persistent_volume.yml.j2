@@ -7,13 +7,13 @@ data:
   azurestorageaccountname: bmdpbnhwZXJzaXN0ZW50dm9sdW1l
   azurestorageaccountkey: ejdYNElWcW5NVjlRZUdhOFVPWENqeTFkTmdmNzdNcUU5M2UrZllBTkJVbCtiazgwQnFLelE4NERxS3UxV1V2bmVHLzI1VVRWNlBCdjI2dlR3bE5jZ2c9PQ==
 ---
-kind: StorageClass
 apiVersion: storage.k8s.io/v1
+kind: StorageClass
 metadata:
   name: azurefilestorage
 provisioner: kubernetes.io/azure-file
 parameters:
-  storageAccount: nginxpersistentvolume
+  storageAccount: nginxtest
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -23,13 +23,13 @@ metadata:
     storage: slow
 spec:
   capacity:
-    storage: 50Gi
+    storage: 10M
   accessModes:
   - ReadWriteOnce
   storageClassName: azurefilestorage
   azureFile:
     secretName: static-persistence-secret
-    shareName: nginx
+    shareName: nginxtest
     readOnly: false
 ---
 apiVersion: v1
@@ -41,5 +41,5 @@ spec:
     - ReadWriteMany  
   resources:
     requests:
-      storage: 5Gi
-  storageClassName: azurefilestorage
+      storage: 20M
+  storageClassName: azurefilestorage # from where ?
