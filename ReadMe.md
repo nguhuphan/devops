@@ -57,19 +57,40 @@ Put your password into ~/.vault_pass
 Before going with Azure, you must install Azure command line interface by Ansyble galaxy:
 ``` ansible-playbook -i inventory/test playbooks/playbooks.yml --tags azure-cli ```
 
+Then create an Azure service principal with access restrictions. Surfing on this for how to create service principal: https://docs.microsoft.com/en-us/cli/azure/create-an-azure-service-principal-azure-cli?view=azure-cli-latest
 
-Setup Azure environment variable: 
+After done, we will have {key:value} pairs of AZURE_SUBSCRIPTION_ID, AZURE_CLIENT_ID, AZURE_SECRET, AZURE_TENANT.
 
+To Setup Azure environment variable, we simplely set them as environment variables by export command.
+But we should automate this with Ansible.
+
+There are sensitive datas, so we should encryt them by Ansible.
+
+Put your password to encrypt in a text file and place in ``` ~/.vault_pass ```
+
+Then execute this command to encrypt a specific string: ```ansible-vault encrypt_string password123 --vault-password-file ~/.vault_pass```
+with password123 is a string need to be encrypted. Do the similar for AZURE_SUBSCRIPTION_ID, AZURE_CLIENT_ID, AZURE_SECRET, AZURE_TENANT. Refer to ./inventory/test/group_vars/all/main.yml
+
+Using roles/app.update_env to setup them as environment variables.
 ``` ansible-playbook -i inventory/test playbooks/playbooks.yml --tags configure_azure_environments --vault-password-file ~/.vault_pass```
+Note:when using encrypt data, you must declare password file.
+
+Done.
+
+### Using Ansible galaxy to install basic tools like java, pip, helm, kubectl ... with specific tag
 
 To install java: 
 ``` ansible-playbook -i inventory/test playbooks/playbooks.yml -e ansible_os_family=Debian --tags java_debian``` 
 
 with ansible_os_family=RedHat,FreeBSD, Debian
+-e option will be provided one environment variable.
 
 To install pip, run the following command: 
 ``` ansible-playbook -i inventory/test playbooks/playbooks.yml --tags pip ```
 
-
 To install list of packages: 
 ``` ansible-playbook -i inventory/test -e ansible_os_family=ubuntu --tags install_packages playbooks/playbooks.yml  ```
+
+### Using Ansible to provision resources on Azure (create AKS, deploy yml file on AKS) and manage our deployment scripts.
+
+``` ansible-playbook -i inventory/test -e ansible_os_family=ubuntu --tags azure_nginx playbooks/playbooks.yml  ```
