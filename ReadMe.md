@@ -1,4 +1,4 @@
-## What is thiss
+# What is this ?
 
 This source code is use ansible to setup Azure CLI automatically on Ubunt Linux 16.04 LTS
 
@@ -10,24 +10,35 @@ This source code is use ansible to setup Azure CLI automatically on Ubunt Linux 
 
 ```sudo apt-get --auto-remove --yes remove python-openssl; pip install pyOpenSSL```
 
+we utilize many module from Ansible Galaxy:
 
-## 2. Ansible Vault is feature of Ansible, enable you to keep sensitve data (password, token .etc) in encrypted files. In this case, we use Vault to store xxx,xxx of Azure. Install ansible vault.
+```ansible-galaxy install -p roles-galaxy -r requirements.yml --force``` 
+
+## 2. Setup ansible vault:
+
+Ansible Vault is feature of Ansible, enable you to keep sensitve data (password, token .etc) in encrypted files. In this case, we use Vault to store xxx,xxx of Azure.
 
 ``` export ANSIBLE_VAULT_PASSWORD_FILE=~/.vault_pass ```
 
 or include this agrument  --vault-password-file ~/.vault_pass
 Put your password into ~/.vault_pass
 
-## To install required roles: 
+## 3. Now, go ahead : khúc này loạn xà ngàu rôi, để file với đặt tên tá lả nhìn cục source ko hiểu gì ráo, restructure lại cái má ới !!!
 
-``` ansible-galaxy install -p roles-galaxy -r requirements.yml --force``` 
+Setup Azure environment variable: 
 
-To update Azure environment variable: ``` ansible-playbook -i inventory/test playbooks/playbooks.yml --tags configure_azure_environments --vault-password-file ~/.vault_pass```
+``` ansible-playbook -i inventory/test playbooks/playbooks.yml --tags configure_azure_environments --vault-password-file ~/.vault_pass```
 
-To install java: ``` ansible-playbook -i inventory/test playbooks/playbooks.yml -e ansible_os_family=Debian --tags java_debian``` with ansible_os_family=RedHat,FreeBSD, Debian
-u
-To install pip, run the following command: ``` ansible-playbook -i inventory/test playbooks/playbooks.yml --tags pip ```
+To install java: 
+``` ansible-playbook -i inventory/test playbooks/playbooks.yml -e ansible_os_family=Debian --tags java_debian``` 
 
-To install azure-cli, run the following command: ``` ansible-playbook -i inventory/test playbooks/playbooks.yml --tags azure-cli ```
+with ansible_os_family=RedHat,FreeBSD, Debian
 
-To install list of packages: ``` ansible-playbook -i inventory/test -e ansible_os_family=ubuntu --tags install_packages playbooks/playbooks.yml  ```
+To install pip, run the following command: 
+``` ansible-playbook -i inventory/test playbooks/playbooks.yml --tags pip ```
+
+To install azure-cli, run the following command: 
+``` ansible-playbook -i inventory/test playbooks/playbooks.yml --tags azure-cli ```
+
+To install list of packages: 
+``` ansible-playbook -i inventory/test -e ansible_os_family=ubuntu --tags install_packages playbooks/playbooks.yml  ```
