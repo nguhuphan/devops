@@ -20,3 +20,5 @@
       tags: install_packages
     - role: geerlingguy.docker
       tags: docker
+    - role: andrewrothstein.kubernetes-helm
+      tags: helm
