@@ -28,13 +28,21 @@ Put your password into ~/.vault_pass
 ### Project structure
 
 ▸ group_vars/
+
 ▸ inventory/
+
     ▸ test/
+
 ▸ playbooks/
+
 ▸ roles-galaxy/
+
 ▸ roles/
+
 ▸ ansible.cfg
+
 ▸ README.md
+
 ▸ requirements.yml
 
 - `group_vars` is a place to store all common/shared vars which are across all environments
