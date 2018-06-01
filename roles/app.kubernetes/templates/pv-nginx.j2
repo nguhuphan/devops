@@ -1,26 +1,31 @@
 apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev
+---
+apiVersion: v1
 kind: Secret
 metadata:
-  name: static-persistence-secret
+  name: nginx-secret
   namespace: dev
 type: Opaque
 data:
-  azurestorageaccountname: bmdpbnh0ZXN0
-  azurestorageaccountkey: dDUvNlYrZmxzd0hJMncwcXJiVHlMVFZrNWs0Q3ZzSFZtbjdSbDRKMVZEV1BYOFpjeUtHKzVsV01JNTIxdTZXSFlpMEE3V1pPSE90ekd6ZktVYTFoeHc9PQ==
+  azurestorageaccountname: bmdpbnhwZXJzaXN0ZW50dm9sdW1l
+  azurestorageaccountkey: Qkl4QXdOSk1BUUY4R3BFUHFMMjduY2lwQ3ZJeUQzVk1hM2JyeVRWaUhDVkVPT3RRMlVBMUZyQVpQcnhpOUlLZGpCNGp1MEIvNzJTWk5qUVRYdFBtY0E9PQ==
 ---
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: azurefilestorage
+  name: nginx-storageclass
   namespace: dev
 provisioner: kubernetes.io/azure-file
 parameters:
-  storageAccount: nginxtest
+  storageAccount: nginxpersistentvolume
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: static-persistence-volume
+  name: nginx-pv
   namespace: dev
   labels: 
     volume: PersistentVolume
@@ -28,17 +33,17 @@ spec:
   capacity:
     storage: 1Gi
   accessModes:
-  - ReadWriteOnce
-  storageClassName: azurefilestorage
+  - ReadWriteMany
+  storageClassName: nginx-storageclass
   azureFile:
-    secretName: static-persistence-secret
+    secretName: nginx-secret
     shareName: nginxtest
     readOnly: false
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: static-persistence-volume-claim 
+  name: nginx-pvc
   namespace: dev
 spec:
   accessModes:
@@ -46,5 +51,5 @@ spec:
   resources:
     requests:
       storage: 500Mi
-  storageClassName: azurefilestorage # from where ?
-  volumeName: static-persistence-volume
+  storageClassName: nginx-storageclass # from where ?
+  volumeName: nginx-pv

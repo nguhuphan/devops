@@ -1,7 +1,7 @@
 # There are arguments should be updated before provisioning a new machine
-az_resource_group: AzurePassGRP
+az_resource_group: firsttest
 
-az_location: southeastasia
+az_location: eastus
 
 az_address_prefixes: "172.31.0.0/16"
 

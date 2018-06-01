@@ -1,0 +1,6 @@
+- name: Create a script file install_nginx_controller.sh
+  copy: content="{{ install_nginx_ingress_controller }}" dest=~/install_nginx_controller.sh
+  tags: install_nginx_controller
+
+- name: Create a script file install_kubelego_controller.sh
+  copy: content="{{ install_kubelego_controller }}" dest=~/install_kubelego_controller.sh

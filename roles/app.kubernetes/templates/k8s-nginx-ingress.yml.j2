@@ -1,0 +1,25 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: nginx-ingress
+  namespace: dev
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  tls:
+  - hosts:
+    - nginx-ingress-prod.eastus.cloudapp.azure.com
+    secretName: casecret
+  rules:
+  - host: nginx-ingress-prod.eastus.cloudapp.azure.com
+    http:
+      paths:
+      - path: /hello
+        backend:
+          serviceName: nginx-service
+          servicePort: 80
+      - path: /store
+        backend:
+          serviceName: nginx-service
+          servicePort: 9009

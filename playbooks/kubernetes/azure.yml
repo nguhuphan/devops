@@ -5,4 +5,4 @@
 
   roles:
     - role: app.kubernetes
-      tags: azure_nginx
+      tags: azure_nginx, install_nginx_controller
