@@ -17,14 +17,10 @@ spec:
         #kubernetes.io/cluster-service: "true"
     spec:
       containers:
-      - name: store
-        image: containersol/k8sbhw-webapp:latest
-        ports:
-        - containerPort: 9009
       - name: nginx
         image: nginx:1.7.9
         ports:
-        - containerPort: 80
+        - containerPort: 80    
         volumeMounts:
         - name: fileshare
           mountPath: /usr/share/nginx/html
@@ -40,8 +36,6 @@ metadata:
   namespace: dev
 spec:
   ports:
-  - name: store
-    port: 9009
   - name: nginx
     port: 80
   selector:

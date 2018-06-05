@@ -4,22 +4,22 @@ metadata:
   name: nginx-ingress
   namespace: dev
   annotations:
-    kubernetes.io/tls-acme: "true"
+    kubernetes.io/ingress.class: nginx
+    # Add to generate certificates for this ingress
+    kubernetes.io/tls-acme: 'true'
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
-  tls:
-  - hosts:
-    - nginx-ingress-prod.eastus.cloudapp.azure.com
-    secretName: casecret
   rules:
-  - host: nginx-ingress-prod.eastus.cloudapp.azure.com
-    http:
-      paths:
-      - path: /hello
-        backend:
-          serviceName: nginx-service
-          servicePort: 80
-      - path: /store
-        backend:
-          serviceName: nginx-service
-          servicePort: 9009
+    - host: nginx-prod.eastus.cloudapp.azure.com
+      http:
+        paths:
+          - backend:
+              serviceName: nginx-service
+              servicePort: 80
+            path: /hello
+  tls:
+    # With this configuration kube-lego will generate a secret in namespace foo called `example-tls`
+    # for the URL `www.example.com`
+    - hosts:
+        - "nginx-prod.eastus.cloudapp.azure.com"
+      secretName: example-tls

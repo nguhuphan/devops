@@ -53,7 +53,7 @@ az_storage_acc_type: Standard_RAGRS
 k8s_storage_key: storage_key
 az_aks_cluster_name: nginxtest
 k8s_node_count: 1
-k8s_node_size: Standard_D1
+k8s_node_size: Standard_D2s_v3
 k8s_azure_secret_key: azure-secret
 az_nginx_replicas: 2
 az_nginx_service_name: nginx-service
