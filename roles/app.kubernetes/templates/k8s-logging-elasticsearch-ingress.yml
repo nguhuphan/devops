@@ -19,3 +19,7 @@ spec:
         backend:
           serviceName: kibana-logging
           servicePort: 5601
+      - path: /dashboard
+        backend: 
+          serviceName: kubernetes-dashboard
+          servicePort: 80
