@@ -9,10 +9,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - nginx-prod.eastus.cloudapp.azure.com
+    - nginx-lb-prod.eastus.cloudapp.azure.com
     secretName: casecret
   rules:
-  - host: nginx-prod.eastus.cloudapp.azure.com
+  - host: nginx-lb-prod.eastus.cloudapp.azure.com
     http:
       paths:
       - path: /

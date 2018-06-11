@@ -8,7 +8,7 @@ mountOptions:
   - dir_mode=0777
   - file_mode=0777
 parameters:
-  storageAccount: nginxpersistentvolume
+  storageAccount: nginxtest
 ---
 
 apiVersion: extensions/v1beta1
@@ -41,7 +41,7 @@ spec:
             memory: 200Mi
           requests:
             cpu: 100m
-            memory: 200Mi
+            memory: 100Mi
         volumeMounts:
         - name: varlog
           mountPath: /var/log
@@ -111,8 +111,8 @@ spec:
             - /bin/sh
             - -c
             - curl -Is http://elasticsearch-logging:9200
-          initialDelaySeconds: 100
-          periodSeconds: 100
+          initialDelaySeconds: 200
+          periodSeconds: 200
         resources:
           # need more cpu upon initialization, therefore burstable class
           limits:

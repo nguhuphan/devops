@@ -10,8 +10,8 @@ metadata:
   namespace: dev
 type: Opaque
 data:
-  azurestorageaccountname: bmdpbnhwZXJzaXN0ZW50dm9sdW1l
-  azurestorageaccountkey: eXBQdHBKbXl3bVc4RjhidlltVExnSHhmalFIZjVwTlFyQWpqS0VyTzhqMFZyd3BmU0ZPYlp4RGJ3RWY2MW0vZUtpNk5JdFUzdklFYkdYQXYxdzIvMEE9PQ==
+  azurestorageaccountname: bmdpbnh0ZXN0
+  azurestorageaccountkey: NDJFSWxRYTFzSk81UisxSVNNdEFPaXl3WGNDNk1Sc3Erdjh4MWd2R0Nkb3UySW8xK2NFTUFjQkh0UFpqd2hhYUZqY1NEZ25wdTh4dDVuOXF2cTA5TFE9PQ==
 ---
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
@@ -20,7 +20,7 @@ metadata:
   namespace: dev
 provisioner: kubernetes.io/azure-file
 parameters:
-  storageAccount: nginxpersistentvolume
+  storageAccount: nginxtest
 ---
 apiVersion: v1
 kind: PersistentVolume
