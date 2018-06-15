@@ -22,3 +22,7 @@
       tags: docker
     - role: andrewrothstein.kubernetes-helm
       tags: helm
+    - role: tersmitten.virtualbox
+      tags: virtualbox
+    - role: Miyurz.minikube
+      tags: minikube
