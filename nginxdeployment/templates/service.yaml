@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "nginxdeployment.fullname" . }}
+  labels:
+    namesapce: {{ .Values.namespace }}
+    app: {{ template "nginxdeployment.name" . }}
+    chart: {{ template "nginxdeployment.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: {{ template "nginxdeployment.name" . }}
+    release: {{ .Release.Name }}

@@ -141,10 +141,10 @@ spec:
       annotations:
         volume.beta.kubernetes.io/storage-class: "es-storageclass"
     spec:
-      accessModes: [ "ReadWriteOnce" ]
+      accessModes: [ "ReadWriteMany" ]
       resources:
         requests:
-          storage: 1Gi
+          storage: 10Gi
 ---
 
 apiVersion: extensions/v1beta1
