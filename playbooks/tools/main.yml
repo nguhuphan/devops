@@ -26,3 +26,9 @@
       tags: virtualbox
     - role: Miyurz.minikube
       tags: minikube
+    - role: app.jenkins
+      tags: jenkins
+    - role: gantsign.maven
+      maven_is_default_installation: yes
+      maven_fact_group_name: maven
+      tags: maven

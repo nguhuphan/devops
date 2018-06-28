@@ -10,3 +10,5 @@
 - src: andrewrothstein.kubernetes-helm
 - src: tersmitten.virtualbox
 - src: vrischmann.minikube
+- src: geerlingguy.jenkins
+- src: gantsign.maven

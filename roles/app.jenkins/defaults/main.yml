@@ -1,0 +1,4 @@
+jenkins_plugins:
+  - pipeline-multibranch-defaults
+  - github-organization-folder
+  - blueocean
